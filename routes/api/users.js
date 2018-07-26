@@ -1,39 +1,12 @@
 var async = require('async');
 var crypto = require('crypto');
-const userController = require("../../controllers/usersController");
-
 const router = require("express").Router();
-//home page, must be logged in.
-router
-    .route("/")
-    .get(userController.islogged, function (req, res) {
-        res.render('index', {
-            title: 'Express',
-            user: req.user
-        });
-    });
+const usersController = require("../../controllers/usersController");
+
 
 //login routes
-router
-    .route("/login")
-    .get(function (req, res) {
-        res.render('login', {
-            user: req.user
-        });
-    })
-
-    .post(function (req, res, next) {
-        passport.authenticate('local', function (err, user, info) {
-            if (err) return next(err)
-            if (!user) {
-                return res.redirect('/login');
-            }
-            req.logIn(user, function (err) {
-                if (err) return next(err);
-                return res.redirect('/');
-            });
-        })(req, res, next);
-    });
+router.get("/",usersController.getUser)
+router.post("/", usersController.checkLogin);
 
 // signup routes
 router
@@ -43,19 +16,7 @@ router
             user: req.user
         });
     })
-    .post(function (req, res) {
-        var user = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password
-        });
-
-        user.save(function (err) {
-            req.logIn(user, function (err) {
-                res.redirect('/');
-            });
-        });
-    });
+    .post(usersController.signUp);
 
 //logout route
 router
@@ -181,5 +142,7 @@ router
             res.redirect('/');
         });
     });
+    
 module.exports = router;
+
 

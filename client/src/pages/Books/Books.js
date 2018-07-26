@@ -6,29 +6,32 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+import axios from 'axios';
 
 class Books extends Component {
   state = {
     books: [],
     title: "",
     author: "",
-    synopsis: ""
+    synopsis: "",
+    userID: ""
   };
 
   componentDidMount() {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
     this.loadBooks();
   }
 
   loadBooks = () => {
     API.getBooks()
       .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
+        this.setState({ books: res.data, title: "", author: "", synopsis: "", userID: ""})
       )
-      .catch(err => console.log(err));
+      .catch(err =>this.props.history.push("/login"));
   };
 
-  deleteBook = id => {
-    API.deleteBook(id)
+  deleteBook = book => {
+    API.deleteBook(book)
       .then(res => this.loadBooks())
       .catch(err => console.log(err));
   };
@@ -46,7 +49,8 @@ class Books extends Component {
       API.saveBook({
         title: this.state.title,
         author: this.state.author,
-        synopsis: this.state.synopsis
+        synopsis: this.state.synopsis,
+        userID: localStorage.getItem('jwtToken')
       })
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
@@ -101,7 +105,7 @@ class Books extends Component {
                         {book.title} by {book.author}
                       </strong>
                     </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                    <DeleteBtn onClick={() => this.deleteBook(book)} />
                   </ListItem>
                 ))}
               </List>
