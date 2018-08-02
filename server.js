@@ -7,6 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const app = express();
 const PORT = process.env.PORT || 3001;
+require('dotenv').config();
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));

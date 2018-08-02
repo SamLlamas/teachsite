@@ -8,37 +8,52 @@ class Nav extends Component {
   navLink;
 
   islogged() {
-    if(!localStorage.getItem('jwtToken')){
-      console.log()
-      return this.navLink = <React.Fragment> <li><a href="/">Home</a></li><li><a href="/login">Login</a></li><li><a href="/signup">Signup</a></li> </React.Fragment>
+    if (!localStorage.getItem('jwtToken')) {
+      return this.navLink =
+        <React.Fragment>
+          <a className="navbar-text nav-link" href="/"><h3>Home</h3></a>
+          <a className="navbar-text nav-link" href="/login"><h3>Login</h3></a>
+          <a className="navbar-text nav-link" href="/signup"><h3>Signup</h3></a>
+        </React.Fragment>
     }
-    else{
-      return this.navLink = <React.Fragment> <li><a href="/">Home</a></li><li><a onClick={this.logout} href="">logout</a></li></React.Fragment>
+    else {
+      return this.navLink =
+        <React.Fragment>
+          <li className="nav-item">
+            <a className="navbar-text nav-link" href="/"><h3>Home</h3></a>
+          </li>
+          <li className="nav-item">
+            <a className="navbar-text nav-link" href="/upload"><h3>Upload</h3></a>
+          </li>
+          <li className="nav-item">
+            <a className="navbar-text nav-link" onClick={this.logout} href=""><h3>Logout</h3></a>
+          </li>
+        </React.Fragment>
     }
   }
-  
+
   render() {
-  const Nav = (
-    <div role="navigation" className="navbar navbar-inverse navbar-static-top">
-      <div className="container">
-        <div className="navbar-header">
-          <button type="button" data-toggle="collapse" data-target=".navbar-collapse" className="navbar-toggle"><span className="sr-only">Toggle navigation</span><span className="icon-bar"></span><span className="icon-bar"></span><span className="icon-bar"></span></button><a href="/" className="navbar-brand">Project name</a>
-        </div>
-        <div className="collapse navbar-collapse">
-          <ul className="nav navbar-nav">
-              {this.islogged()}
+    const Nav = (
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark justify-content-start">
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+            {this.islogged()}
           </ul>
         </div>
-      </div>
-    </div>
+      </nav>
+
+
     );
-  
+
     return Nav
   }
 }
 
 
- 
+
 
 
 
