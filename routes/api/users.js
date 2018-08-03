@@ -3,7 +3,6 @@ const crypto = require('crypto');
 const router = require("express").Router();
 const usersController = require("../../controllers/usersController");
 const db = require("../../models");
-const nodemailer = require('nodemailer');
 const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
