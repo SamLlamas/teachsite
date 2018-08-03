@@ -49,8 +49,10 @@ class Login extends Component {
         return (
             <Container fluid>
                 <Row>
-                    <Col size="md-4"></Col>
+                    <div className="col"></div>
                     <Col size="md-4">
+                        <br />
+                        <h2 className= "text-center">Welcome to the Panther's Den! <br />  Please log in or sign up</h2>
                         <form method="POST" onSubmit={this.handleSubmit}>
                             <legend>Login</legend>
                             <div className="form-group">
@@ -67,6 +69,7 @@ class Login extends Component {
                             <a href="/forgot" className="btn btn-link">Forgot Password?</a>
                         </form>
                     </Col>
+                    <div className="col"></div>
                 </Row>
             </Container>
         );

@@ -10,8 +10,14 @@ class Upload extends Component {
     constructor() {
         super();
         this.state = {
-            Properties: "",
-            Type: "",
+            addres: "",
+            type: "",
+            rent: 0,
+            duration: "",
+            deposit: 0,
+            bedrooms: 0,
+            baths: 0.0,
+            sqft: 0,
             userID: ""
         };
     }
@@ -56,7 +62,7 @@ class Upload extends Component {
                         <form className='listingDetails'>
                         <Row>
                             <Col size="md-6">
-                                <label>Propety Address</label>
+                                <label>Property Address</label>
                                 <br />
                                 <Input
                                     type="text"
@@ -65,7 +71,7 @@ class Upload extends Component {
                                 />
                             </Col>
                             <Col size = "md-6">
-                                <label>Bedrooms</label>
+                                <label>Property Type</label>
                                 <select className="form-control" value={this.state.value} onChange={this.handleInputChange}>
                                     <option defaultValue disabled>Please Select</option>
                                     <option value="House">House</option>

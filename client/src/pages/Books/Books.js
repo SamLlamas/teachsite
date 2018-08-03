@@ -60,8 +60,7 @@ class Books extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-6">
-          </Col>
+          <div className="col"></div>
           <Col size="md-6 sm-12">
             <Jumbotron>
               <h1>Books On My List</h1>
@@ -83,6 +82,7 @@ class Books extends Component {
               <h3>No Results to Display</h3>
             )}
           </Col>
+          <div className="col"></div>
         </Row>
       </Container>
     );
