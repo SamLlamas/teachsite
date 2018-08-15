@@ -6,7 +6,9 @@ class Signup extends Component {
     constructor() {
         super();
         this.state = {
+          name: '',
           username: '',
+          phone: '',
           email: '',
           password: ''
         };
@@ -35,7 +37,12 @@ class Signup extends Component {
                     <Col size="md-4"></Col>
                     <Col size="md-4">
                         <form method="POST" onSubmit={this.onSubmit}>
-                            <legend>Signup
+                            <legend> <h1>Signup</h1>
+                            <br />
+                                <div className="form-group">
+                                    <label htmlFor="name">Name</label>
+                                    <input type="text" name="name" autoFocus="autofocus" className="form-control" value={this.state.name} onChange={this.onChange} placeholder="First and Last Name" required/>
+                                </div>
                                 <div className="form-group">
                                     <label htmlFor="username">Username</label>
                                     <input type="text" name="username" autoFocus="autofocus" className="form-control" value={this.state.username} onChange={this.onChange} required/>
@@ -44,6 +51,11 @@ class Signup extends Component {
                                     <label htmlFor="email">Email</label>
                                     <input type="text" name="email" className="form-control" 
                                     value={this.state.email} onChange={this.onChange} required/>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="Phone">Phone</label>
+                                    <input type="tel" name="phone" className="form-control" 
+                                    value={this.state.phone} onChange={this.onChange} placeholder="1-(555)-555-5555"  required/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>

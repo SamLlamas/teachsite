@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import API from "../../utils/API";
+import p1 from "../../images/Logo.png"
 
 
 
@@ -33,7 +34,7 @@ class Login extends Component {
                     localStorage.setItem('jwtToken', res.data.token)
                     this.props.history.push('/')
                 })
-                .catch(err => console.log(err));
+                .catch(err => window.alert("Incorrect Password"));
         }
     };
 
@@ -52,6 +53,7 @@ class Login extends Component {
                     <div className="col"></div>
                     <Col size="md-4">
                         <br />
+                        <img src={p1} alt="Panther Den Logo"/>
                         <h2 className= "text-center">Welcome to the Panther's Den! <br />  Please log in or sign up</h2>
                         <form method="POST" onSubmit={this.handleSubmit}>
                             <legend>Login</legend>

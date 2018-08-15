@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export default {
-  // Gets all books
-  getBooks: function() {
-    return axios.get("/api/books");
+  // Gets all Posts
+  getPosts: function() {
+    return axios.get("/api/posts");
   },
   getLogin: function() {
     return axios.get("/api/users");
@@ -14,21 +14,21 @@ export default {
   signUp: function({ username, email, password }){
     return axios.post("api/users/signup", { username, email, password })
   },
-  // Gets the book with the given id
-  getBook: function(id) {
-    return axios.get("/api/books/" + id);
+  // Gets the Post with the given id
+  getPost: function(id) {
+    return axios.get("/api/posts/" + id);
   },
-  // Deletes the book with the given id
-  deleteBook: function(book) {
-    return axios.delete("/api/books/" + book._id, book);
+  // Deletes the Post with the given id
+  deletePost: function(Post) {
+    return axios.delete("/api/posts/" + Post._id, Post);
   },
-  // Saves a book to the database
-  saveBook: function(bookData) {
-    return axios.post("/api/books", bookData);
+  // Saves a Post to the database
+  savePost: function(postData) {
+    console.log(2)
+    return axios.post("/api/posts", postData);
   },
 
   resetPass: function(email){
-
     return axios.post("/api/users/forgot", email);
   }
 };

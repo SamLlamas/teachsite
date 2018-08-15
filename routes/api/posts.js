@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const booksController = require("../../controllers/booksController");
+const postsController = require("../../controllers/postsController");
 const usersController = require("../../controllers/usersController");
 var passport = require('passport');
 var settings = require('../../config/settings');
@@ -23,7 +23,7 @@ getToken = function (headers) {
 router.get("/", passport.authenticate('jwt', { session: false }), function (req, res) {
   var token = getToken(req.headers);
   if (token) {
-    booksController.findAll(req, res)
+    postsController.findAll(req, res)
   }
   else {
     res.redirect('/login');
@@ -32,10 +32,10 @@ router.get("/", passport.authenticate('jwt', { session: false }), function (req,
 router.post("/", passport.authenticate('jwt', { session: false }), function (req, res) {
   var token = getToken(req.headers);
   if (token) {
-    booksController.create(req, res)
+    console.log(3)
+    postsController.create(req, res)
   }
   else {
-    console.log("test")
     res.redirect("/login");
   }
 });
@@ -44,7 +44,7 @@ router.post("/", passport.authenticate('jwt', { session: false }), function (req
 router.get("/:id", passport.authenticate('jwt', { session: false }), function (req, res) {
   var token = getToken(req.headers);
   if (token) {
-    booksController.findById(req, res)
+    postsController.findById(req, res)
   }
   else {
     console.log("test")
@@ -53,12 +53,12 @@ router.get("/:id", passport.authenticate('jwt', { session: false }), function (r
 })
 router.put("/:id", passport.authenticate('jwt', { session: false }), function (req, res) {
   var token = getToken(req.headers);
-  if (token) { booksController.update(req, res) }
+  if (token) { postsController.update(req, res) }
 })
 router.delete("/:id", passport.authenticate('jwt', { session: false }), function (req, res) {
   var token = getToken(req.headers);
   if (token) { 
-    booksController.remove(req, res)
+    postsController.remove(req, res)
   }
 });
 

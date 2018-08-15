@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Books from "./pages/Books";
+import Postings from "./pages/Postings";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
 import Login from "./pages/Login"
@@ -17,8 +17,8 @@ const App = () => (
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/" component={Books} />
-        <Route exact path="/books/:id" component={Detail} />
+        <Route exact path="/" component={Postings} />
+        <Route exact path="/posts/:id" component={Detail} />
         <Route exact path="/forgot" component={Forgot} />
         <Route exact path="/upload" component={Upload} />
         <Route component={NoMatch} />

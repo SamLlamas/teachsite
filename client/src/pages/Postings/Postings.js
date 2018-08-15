@@ -7,9 +7,9 @@ import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import axios from 'axios';
 
-class Books extends Component {
+class Posts extends Component {
   state = {
-    books: [],
+    posts: [],
     title: "",
     author: "",
     synopsis: "",
@@ -18,20 +18,20 @@ class Books extends Component {
 
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-    this.loadBooks();
+    this.loadPosts();
   }
 
-  loadBooks = () => {
-    API.getBooks()
+  loadPosts = () => {
+    API.getPosts()
       .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "", userID: ""})
+        this.setState({ posts: res.data, title: "", author: "", synopsis: "", userID: ""})
       )
       .catch(err =>this.props.history.push("/login"));
   };
 
-  deleteBook = book => {
-    API.deleteBook(book)
-      .then(res => this.loadBooks())
+  deletePost = post => {
+    API.deletePost(post)
+      .then(res => this.loadPosts())
       .catch(err => console.log(err));
   };
 
@@ -42,20 +42,6 @@ class Books extends Component {
     });
   };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis,
-        userID: localStorage.getItem('jwtToken')
-      })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
-
   render() {
     return (
       <Container fluid>
@@ -63,18 +49,18 @@ class Books extends Component {
           <div className="col"></div>
           <Col size="md-6 sm-12">
             <Jumbotron>
-              <h1>Books On My List</h1>
+              <h1>Available Listings</h1>
             </Jumbotron>
-            {this.state.books.length ? (
+            {this.state.posts.length ? (
               <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
+                {this.state.posts.map(post => (
+                  <ListItem key={post._id}>
+                    <Link to={"/posts/" + post._id}>
                       <strong>
-                        {book.title} by {book.author}
+                        {post.title} by {post.author}
                       </strong>
                     </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book)} />
+                    <DeleteBtn onClick={() => this.deletePost(post)} />
                   </ListItem>
                 ))}
               </List>
@@ -89,4 +75,4 @@ class Books extends Component {
   }
 }
 
-export default Books;
+export default Posts;
