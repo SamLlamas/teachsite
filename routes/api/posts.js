@@ -1,8 +1,6 @@
 const router = require("express").Router();
 const postsController = require("../../controllers/postsController");
-const usersController = require("../../controllers/usersController");
 var passport = require('passport');
-var settings = require('../../config/settings');
 require('../../config/passport')(passport);
 
 

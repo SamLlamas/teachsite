@@ -31,7 +31,6 @@ class Login extends Component {
                 password: this.state.pass
             })
                 .then(res => {
-                    
                     localStorage.setItem('jwtToken', res.data.token);
                     localStorage.setItem('currentUserID', res.data.id);
                     console.log(localStorage);

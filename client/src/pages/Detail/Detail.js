@@ -16,33 +16,35 @@ class Detail extends Component {
     API.getPost(this.props.match.params.id)
       .then(res => this.setState({ post: res.data }))
       .catch(err => this.props.history.push("/login"));
+
   }
 
   render() {
     return (
       <Container fluid>
+      <br />
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1>
-                {/* {this.state.book.title} by {this.state.book.author} */}
-              </h1>
             </Jumbotron>
           </Col>
         </Row>
         <Row>
+        <div className="col"></div>
           <Col size="md-10 md-offset-1">
             <article>
-              <h1>Synopsis</h1>
-              <p>
-                {/* {this.state.book.synopsis} */}
-              </p>
+              <h1>{this.state.post.address}</h1>
+              <h3>
+              {this.state.post.bedrooms} Bedroom - {this.state.post.bath} bath - {this.state.post.type}; 
+              </h3>
+              <br />
+              <p> {this.state.post.description}</p>
             </article>
           </Col>
         </Row>
         <Row>
           <Col size="md-2">
-            <Link to="/">← Back to Authors</Link>
+            <Link to="/">← Back to Posts</Link>
           </Col>
         </Row>
       </Container>

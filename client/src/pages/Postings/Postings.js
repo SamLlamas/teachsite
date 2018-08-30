@@ -55,6 +55,7 @@ class Posts extends Component {
   };
 
   render() {
+
     return (
       <Container fluid>
         <Row>

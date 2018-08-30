@@ -10,6 +10,7 @@ class Upload extends Component {
     constructor() {
         super();
         this.state = {
+            image: null,
             address: "",
             city: "",
             type: "Please Select",
@@ -40,6 +41,7 @@ class Upload extends Component {
     }
     componentDidMount() {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+        axios.defaults.headers.common['CurrentUser'] = localStorage.getItem('currentUserID');
     }
     handleChange = (event) => {
         
@@ -55,7 +57,6 @@ class Upload extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(1)
         API.savePost({
             address: this.state.address,
             city: this.state.city,
@@ -83,7 +84,11 @@ class Upload extends Component {
             userID: localStorage.getItem('currentUserID')
         })
           .then(res => this.props.history.push("/") )
-          .catch(err => console.log(err));
+          .catch(err => {window.alert("please fill out all fields"), console.log(err)});
+    }
+
+    fileselectHandler = event => {
+        console.log(event.target.files[0]);
     }
 
     render() {
@@ -95,7 +100,8 @@ class Upload extends Component {
                     <div className="col"></div>
                     <Col size="md-8">
                         <Jumbotron>
-                            <h2>press here to upload pictures</h2>
+                            <label htmlFor = "image" placeholder="click below to upload pictures"><h2>press here to upload pictures </h2></label><br />
+                            <input type="file" name="image" onChange={this.fileselectHandler} />
                         </Jumbotron>
                         <p>*Please note all fields are required</p>
                         <br />
