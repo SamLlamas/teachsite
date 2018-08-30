@@ -10,27 +10,39 @@ import axios from 'axios';
 class Posts extends Component {
   state = {
     posts: [],
-    title: "",
-    author: "",
-    synopsis: "",
-    userID: ""
+    bedrooms: "",
+    type: "",
+    rent: 0,
+    address: "",
+    userID: localStorage.getItem('currentUserID')
   };
 
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+    axios.defaults.headers.common['CurrentUser'] = localStorage.getItem('currentUserID');
     this.loadPosts();
+  }
+
+  loadButtons = (IDnumber, post) => {
+    if (IDnumber === localStorage.getItem('currentUserID')){
+      let userdata = this.state.userID
+      return <DeleteBtn onClick={() => this.deletePost(post, userdata)} />
+    }
+    else {
+      return null;
+    }
   }
 
   loadPosts = () => {
     API.getPosts()
       .then(res =>
-        this.setState({ posts: res.data, title: "", author: "", synopsis: "", userID: ""})
+        this.setState({ posts: res.data, bedrooms: "", type:"",rent: 0, address: ""})
       )
       .catch(err =>this.props.history.push("/login"));
   };
 
-  deletePost = post => {
-    API.deletePost(post)
+  deletePost = (post, userdata) => {
+    API.deletePost({post: post, userdata: userdata})
       .then(res => this.loadPosts())
       .catch(err => console.log(err));
   };
@@ -57,10 +69,11 @@ class Posts extends Component {
                   <ListItem key={post._id}>
                     <Link to={"/posts/" + post._id}>
                       <strong>
-                        {post.title} by {post.author}
+                        {post.bedrooms} Bedroom; {post.type}; 
                       </strong>
+                      <br /> ${post.rent}/mo
                     </Link>
-                    <DeleteBtn onClick={() => this.deletePost(post)} />
+                    {this.loadButtons(post.userID, post)}
                   </ListItem>
                 ))}
               </List>

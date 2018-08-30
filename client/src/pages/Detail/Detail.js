@@ -7,14 +7,14 @@ import axios from 'axios';
 
 class Detail extends Component {
   state = {
-    book: {}
+    post: {}
   };
   // When this component mounts, grab the book with the _id of this.props.match.params.id
   // e.g. localhost:3000/books/599dcb67f0f16317844583fc
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-    API.getBook(this.props.match.params.id)
-      .then(res => this.setState({ book: res.data }))
+    API.getPost(this.props.match.params.id)
+      .then(res => this.setState({ post: res.data }))
       .catch(err => this.props.history.push("/login"));
   }
 
@@ -25,7 +25,7 @@ class Detail extends Component {
           <Col size="md-12">
             <Jumbotron>
               <h1>
-                {this.state.book.title} by {this.state.book.author}
+                {/* {this.state.book.title} by {this.state.book.author} */}
               </h1>
             </Jumbotron>
           </Col>
@@ -35,7 +35,7 @@ class Detail extends Component {
             <article>
               <h1>Synopsis</h1>
               <p>
-                {this.state.book.synopsis}
+                {/* {this.state.book.synopsis} */}
               </p>
             </article>
           </Col>

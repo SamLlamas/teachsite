@@ -14,13 +14,12 @@ getToken = function (headers) {
 };
 
 belong = function(dbModel, req,next){
-    if(dbModel.userID === req.headers.authorization)
+    if(dbModel.userID === req.headers.currentuser)
     {
       return dbModel;
     }
     else {
-      console.log("right here")
-      false;
+      return false;
     }
   }
 
@@ -41,8 +40,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log(4)
-    console.log(req.body)
     db.Post
       .create(req.body)
       .then(dbModel => res.json(dbModel))

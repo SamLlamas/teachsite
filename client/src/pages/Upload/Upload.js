@@ -80,9 +80,9 @@ class Upload extends Component {
             smallDog: this.state.smallDog,
             bigDog: this.state.bigDog,
             ammenties: this.state.ammenties,
-            userID: localStorage.getItem('jwtToken')
+            userID: localStorage.getItem('currentUserID')
         })
-          .then(res =>this.props.history.push("/") )
+          .then(res => this.props.history.push("/") )
           .catch(err => console.log(err));
     }
 

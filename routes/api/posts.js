@@ -32,7 +32,6 @@ router.get("/", passport.authenticate('jwt', { session: false }), function (req,
 router.post("/", passport.authenticate('jwt', { session: false }), function (req, res) {
   var token = getToken(req.headers);
   if (token) {
-    console.log(3)
     postsController.create(req, res)
   }
   else {
@@ -56,6 +55,7 @@ router.put("/:id", passport.authenticate('jwt', { session: false }), function (r
   if (token) { postsController.update(req, res) }
 })
 router.delete("/:id", passport.authenticate('jwt', { session: false }), function (req, res) {
+  console.log()
   var token = getToken(req.headers);
   if (token) { 
     postsController.remove(req, res)
