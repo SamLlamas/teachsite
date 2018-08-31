@@ -10,7 +10,7 @@ class Upload extends Component {
     constructor() {
         super();
         this.state = {
-            image: null,
+            image: [],
             address: "",
             city: "",
             type: "Please Select",
@@ -88,8 +88,42 @@ class Upload extends Component {
     }
 
     fileselectHandler = event => {
-        console.log(event.target.files[0]);
+        let files = event.target.files
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0])
+
+        reader.onload=e=>{
+            const formData = {file:e.target.result}
+            console.log(formData);
+        }
     }
+
+    previewFiles =()=> {
+
+        var preview = document.querySelector('#preview');
+        var files   = document.querySelector('input[type=file]').files;
+      
+        function readAndPreview(file) {
+      
+          // Make sure `file.name` matches our extensions criteria
+          if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
+            var reader = new FileReader();
+      
+            reader.addEventListener("load", function () {
+              var image = new Image();
+              image.height = 200;
+              image.title = file.name;
+              image.src = this.result;
+              preview.appendChild( image );
+            }, false);
+            reader.readAsDataURL(file);
+          }
+        }
+        if (files) {
+          [].forEach.call(files, readAndPreview);
+        }
+      
+      }
 
     render() {
         return (
@@ -101,7 +135,8 @@ class Upload extends Component {
                     <Col size="md-8">
                         <Jumbotron>
                             <label htmlFor = "image" placeholder="click below to upload pictures"><h2>press here to upload pictures </h2></label><br />
-                            <input type="file" name="image" onChange={this.fileselectHandler} />
+                            <input type="file" name="image" onChange={this.previewFiles} multiple />
+                            <div id="preview"></div>
                         </Jumbotron>
                         <p>*Please note all fields are required</p>
                         <br />

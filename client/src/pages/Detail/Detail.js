@@ -67,6 +67,7 @@ class Detail extends Component {
               <h3>
                 {this.state.post.bedrooms} Bedroom - {this.state.post.bath} bath - {this.state.post.type};
               </h3>
+              <p>{this.state.post.sqft} sqft</p>
               <br />
               <p> {this.state.post.description}</p>
             </article>
