@@ -10,7 +10,7 @@ class Upload extends Component {
     constructor() {
         super();
         this.state = {
-            image: [],
+            img: [],
             address: "",
             city: "",
             type: "Please Select",
@@ -43,8 +43,7 @@ class Upload extends Component {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
         axios.defaults.headers.common['CurrentUser'] = localStorage.getItem('currentUserID');
     }
-    handleChange = (event) => {
-        
+    handleChange = (event) => {    
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     
@@ -58,6 +57,7 @@ class Upload extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         API.savePost({
+            img: this.state.img,
             address: this.state.address,
             city: this.state.city,
             type: this.state.type,
@@ -92,6 +92,7 @@ class Upload extends Component {
         let reader = new FileReader();
         reader.readAsDataURL(files[0])
 
+
         reader.onload=e=>{
             const formData = {file:e.target.result}
             console.log(formData);
@@ -102,7 +103,12 @@ class Upload extends Component {
 
         var preview = document.querySelector('#preview');
         var files   = document.querySelector('input[type=file]').files;
-      
+        let newArray= this.state.img
+        if (newArray != null){
+            newArray = newArray.slice()
+        }
+        let current = this
+              
         function readAndPreview(file) {
       
           // Make sure `file.name` matches our extensions criteria
@@ -110,13 +116,18 @@ class Upload extends Component {
             var reader = new FileReader();
       
             reader.addEventListener("load", function () {
-              var image = new Image();
-              image.height = 200;
-              image.title = file.name;
-              image.src = this.result;
-              preview.appendChild( image );
+              var img = new Image();
+              img.height = 200;
+              img.title = file.name;
+              img.src = this.result;
+              preview.appendChild( img );
+              newArray.push(img);
+              current.setState({img :newArray})
             }, false);
             reader.readAsDataURL(file);
+            
+            
+            
           }
         }
         if (files) {

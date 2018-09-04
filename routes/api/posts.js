@@ -30,7 +30,9 @@ router.get("/", passport.authenticate('jwt', { session: false }), function (req,
 router.post("/", passport.authenticate('jwt', { session: false }), function (req, res) {
   var token = getToken(req.headers);
   if (token) {
+    console.log(req.body)
     postsController.create(req, res)
+    
   }
   else {
     res.redirect("/login");
@@ -44,7 +46,6 @@ router.get("/:id", passport.authenticate('jwt', { session: false }), function (r
     postsController.findById(req, res)
   }
   else {
-    console.log("test")
     res.redirect("/login");
   }
 })
