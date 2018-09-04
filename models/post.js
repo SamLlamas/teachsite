@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
   img:{ data: Buffer, contentType: String },
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  phone:  { type: String, required: true },
   address: { type: String, required: true },
   city: { type: String, required: true },
   type:  { type: String, required: true },

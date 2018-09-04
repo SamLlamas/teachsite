@@ -11,6 +11,9 @@ class Upload extends Component {
         super();
         this.state = {
             img: [],
+            name: "",
+            phone: "",
+            email: "",
             address: "",
             city: "",
             type: "Please Select",
@@ -43,21 +46,24 @@ class Upload extends Component {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
         axios.defaults.headers.common['CurrentUser'] = localStorage.getItem('currentUserID');
     }
-    handleChange = (event) => {    
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    
-    const name = target.name;
+    handleChange = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    this.setState({
-      [name]: value
-    });
-    }    
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
 
     handleSubmit = (e) => {
         e.preventDefault();
         API.savePost({
             img: this.state.img,
+            name: this.state.name,
+            phone: this.state.phone,
+            email: this.state.email,
             address: this.state.address,
             city: this.state.city,
             type: this.state.type,
@@ -83,8 +89,8 @@ class Upload extends Component {
             ammenties: this.state.ammenties,
             userID: localStorage.getItem('currentUserID')
         })
-          .then(res => this.props.history.push("/") )
-          .catch(err => {window.alert("please fill out all fields"), console.log(err)});
+            .then(res => this.props.history.push("/"))
+            .catch(err => { window.alert("please fill out all fields"), console.log(err) });
     }
 
     fileselectHandler = event => {
@@ -93,72 +99,115 @@ class Upload extends Component {
         reader.readAsDataURL(files[0])
 
 
-        reader.onload=e=>{
-            const formData = {file:e.target.result}
+        reader.onload = e => {
+            const formData = { file: e.target.result }
             console.log(formData);
         }
     }
 
-    previewFiles =()=> {
+    previewFiles = () => {
 
         var preview = document.querySelector('#preview');
-        var files   = document.querySelector('input[type=file]').files;
-        let newArray= this.state.img
-        if (newArray != null){
+        var files = document.querySelector('input[type=file]').files;
+        let newArray = this.state.img
+        if (newArray != null) {
             newArray = newArray.slice()
         }
         let current = this
-              
+
         function readAndPreview(file) {
-      
-          // Make sure `file.name` matches our extensions criteria
-          if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
-            var reader = new FileReader();
-      
-            reader.addEventListener("load", function () {
-              var img = new Image();
-              img.height = 200;
-              img.title = file.name;
-              img.src = this.result;
-              preview.appendChild( img );
-              newArray.push(img);
-              current.setState({img :newArray})
-            }, false);
-            reader.readAsDataURL(file);
-            
-            
-            
-          }
+
+            // Make sure `file.name` matches our extensions criteria
+            if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var img = new Image();
+                    img.height = 200;
+                    img.title = file.name;
+                    img.src = this.result;
+                    preview.appendChild(img);
+                    newArray.push(img);
+                    current.setState({ img: newArray })
+                }, false);
+                reader.readAsDataURL(file);
+
+
+
+            }
         }
         if (files) {
-          [].forEach.call(files, readAndPreview);
+            [].forEach.call(files, readAndPreview);
         }
-      
-      }
+
+    }
 
     render() {
         return (
             <Container fluid>
                 <br />
                 <form className='listingDetails' method="POST" onSubmit={this.handleSubmit}>
-                <Row>
-                    <div className="col"></div>
-                    <Col size="md-8">
-                        <Jumbotron>
-                            <label htmlFor = "image" placeholder="click below to upload pictures"><h2>press here to upload pictures </h2></label><br />
-                            <input type="file" name="image" onChange={this.previewFiles} multiple />
-                            <div id="preview"></div>
-                        </Jumbotron>
-                        <p>*Please note all fields are required</p>
-                        <br />
-                    </Col>
-                    <div className="col"></div>
-                </Row>
-                <Row>
-                    <div className="col"></div>
-                    <Col size="md-8">
-                        <h2>Property's details</h2>
-                        <br />
+                    <Row>
+                        <div className="col"></div>
+                        <Col size="md-8">
+                            <Jumbotron>
+                                <label htmlFor="image" placeholder="click below to upload pictures"><h2>press here to upload pictures </h2></label><br />
+                                <input type="file" name="image" onChange={this.previewFiles} multiple />
+                                <div id="preview"></div>
+                            </Jumbotron>
+                            <p>*Please note all fields are required</p>
+                            <br />
+                        </Col>
+                        <div className="col"></div>
+                    </Row>
+                    <Row>
+                        <div className="col"></div>
+                        <Col size="md-8">
+                            <h2>Contact details</h2>
+
+                            <Row>
+                                <Col size="md-6">
+                                    <label>Name</label>
+                                    <br />
+                                    <Input
+                                        name="name"
+                                        type="text"
+                                        value={this.state.address}
+                                        onChange={this.handleChange}
+                                        required
+                                    />
+                                    <br />
+                                    <label>Phone Number</label>
+                                    <br />
+                                    <Input
+                                        name="phone"
+                                        type="tel"
+                                        value={this.state.city}
+                                        onChange={this.handleChange}
+                                        required
+                                    />
+                                </Col>
+                                <Col size="md-6">
+                                    <label>E-mail</label>
+                                    <br />
+                                    <Input
+                                        name="email"
+                                        type="email"
+                                        value={this.state.city}
+                                        onChange={this.handleChange}
+                                        required
+                                    />
+                                </Col>
+                            </Row>
+                            <br />
+                        </Col>
+                        <div className="col"></div>
+                    </Row>
+                    <Row>
+                        <div className="col"></div>
+                        <Col size="md-8">
+                            <h2>Property's details</h2>
+                            <br />
                             <Row>
                                 <Col size="md-6">
                                     <label>Street Address</label>
@@ -192,15 +241,15 @@ class Upload extends Component {
                                     </select>
                                 </Col>
                             </Row>
-                    </Col>
-                    <div className="col"></div>
-                </Row>
-                <br />
-                <Row>
-                    <div className="col"></div>
-                    <Col size="md-8">
-                        <h2>Details and Description </h2>
-                        <br />
+                        </Col>
+                        <div className="col"></div>
+                    </Row>
+                    <br />
+                    <Row>
+                        <div className="col"></div>
+                        <Col size="md-8">
+                            <h2>Details and Description </h2>
+                            <br />
                             <Row>
                                 <Col size="md-6">
                                     <label>Rent</label>
@@ -302,20 +351,20 @@ class Upload extends Component {
                                         required />
                                 </Col>
                             </Row>
-                    </Col>
-                    <div className="col"></div>
-                </Row>
-                <br />
-                <Row>
-                    <div className="col"></div>
-                    <Col size="md-8">
-                        <h2>Amenities and rules </h2>
-                        <br />
+                        </Col>
+                        <div className="col"></div>
+                    </Row>
+                    <br />
+                    <Row>
+                        <div className="col"></div>
+                        <Col size="md-8">
+                            <h2>Amenities and rules </h2>
+                            <br />
                             <Row>
                                 <Col size="md-6">
                                     <label><h3>Amenities</h3></label>
                                     <Checkbox name="ac" check={this.state.ac} change={this.handleChange} id="A/C" />
-                                    <Checkbox name= "garage" check={this.state.garage} change={this.handleChange} id="Garage Parking" />
+                                    <Checkbox name="garage" check={this.state.garage} change={this.handleChange} id="Garage Parking" />
                                     <Checkbox name="offstreet" check={this.state.offstreet} change={this.handleChange} id="Off-Street Parking" />
                                     <Checkbox name="furnished" check={this.state.furnished} change={this.handleChange} id="Furnished" />
                                     <Checkbox name="pool" check={this.state.pool} change={this.handleChange} id="Pool" />
@@ -346,18 +395,18 @@ class Upload extends Component {
                                     <Checkbox name="bigDog" check={this.state.bigDog} change={this.handleChange} id="Large Dogs Allowed" />
                                 </Col>
                             </Row>
-                        
-                    </Col>
-                    <div className="col"></div>
-                </Row>
-                <br />
-                <Row>
-                    <div className="col"></div>
-                    <Col size="md-8">
-                        <FormBtn type="submit"> Upload Post!</FormBtn>
-                    </Col>
-                    <div className="col"></div>
-                </Row>
+
+                        </Col>
+                        <div className="col"></div>
+                    </Row>
+                    <br />
+                    <Row>
+                        <div className="col"></div>
+                        <Col size="md-8">
+                            <FormBtn type="submit"> Upload Post!</FormBtn>
+                        </Col>
+                        <div className="col"></div>
+                    </Row>
                 </form>
             </Container >
         );
