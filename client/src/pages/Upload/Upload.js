@@ -172,7 +172,7 @@ class Upload extends Component {
                                     <Input
                                         name="name"
                                         type="text"
-                                        value={this.state.address}
+                                        value={this.state.name}
                                         onChange={this.handleChange}
                                         required
                                     />
@@ -182,7 +182,7 @@ class Upload extends Component {
                                     <Input
                                         name="phone"
                                         type="tel"
-                                        value={this.state.city}
+                                        value={this.state.phone}
                                         onChange={this.handleChange}
                                         required
                                     />
@@ -193,7 +193,7 @@ class Upload extends Component {
                                     <Input
                                         name="email"
                                         type="email"
-                                        value={this.state.city}
+                                        value={this.state.email}
                                         onChange={this.handleChange}
                                         required
                                     />
