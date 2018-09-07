@@ -371,7 +371,7 @@ class Upload extends Component {
 
                                     <br />
 
-                                    <label><h3>Ammenties included:</h3></label>
+                                    <label><h3>Utilities Included?</h3></label>
                                     <select className="form-control" value={this.state.ammenties} onChange={this.handleChange} required name="ammenties">
                                         <option defaultValue disabled>Please Select</option>
                                         <option value="yes">Yes</option>

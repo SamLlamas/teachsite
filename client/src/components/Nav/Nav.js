@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import p2 from "../../images/prospectsierrawith logo.png"
 
 class Nav extends Component {
   logout() {
@@ -34,7 +35,9 @@ class Nav extends Component {
 
   render() {
     const Nav = (
+      
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark justify-content-start">
+      <img src={p2} alt="Panther Den Logo" height = '50px'/>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
