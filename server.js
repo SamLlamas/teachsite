@@ -7,9 +7,12 @@ const session = require('express-session');
 const passport = require('passport');
 const app = express();
 const PORT = process.env.PORT || 3001;
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
 require('dotenv').config();
 
 // Define middleware here
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -17,6 +20,8 @@ app.use(session({ secret: 'session secret key',resave: false,
 saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(fileUpload());
 
 
 

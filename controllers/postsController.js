@@ -43,7 +43,7 @@ module.exports = {
     console.log(req.body)
     db.Post
       .create(req.body)
-      .then(dbModel => console.log(4 + dbModel))
+      .then(dbModel => console.log(4 + dbModel.img))
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

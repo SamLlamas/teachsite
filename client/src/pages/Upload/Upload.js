@@ -59,8 +59,17 @@ class Upload extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+
+        let listoFiles = this.uploadInput.files;
+        let data = new FormData();
+        for (let i = 0; i < listoFiles.length; i++) {
+            data.append("file", listoFiles[i])
+            data.append("fileName", listoFiles[i].name)
+        }
+        console.log(data)
+
         API.savePost({
-            img: this.state.img,
+            img: data,
             name: this.state.name,
             phone: this.state.phone,
             email: this.state.email,
@@ -127,8 +136,6 @@ class Upload extends Component {
                     img.title = file.name;
                     img.src = this.result;
                     preview.appendChild(img);
-                    newArray.push(img);
-                    current.setState({ img: newArray })
                 }, false);
                 reader.readAsDataURL(file);
 
@@ -142,6 +149,7 @@ class Upload extends Component {
 
     }
 
+
     render() {
         return (
             <Container fluid>
@@ -152,7 +160,7 @@ class Upload extends Component {
                         <Col size="md-8">
                             <Jumbotron>
                                 <label htmlFor="image" placeholder="click below to upload pictures"><h2>press here to upload pictures </h2></label><br />
-                                <input type="file" name="image" onChange={this.previewFiles} multiple />
+                                <input type="file" name="image" ref={(ref) => { this.uploadInput = ref; }} onChange={this.previewFiles} multiple />
                                 <div id="preview"></div>
                             </Jumbotron>
                             <p>*Please note all fields are required</p>
