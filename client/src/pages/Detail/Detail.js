@@ -17,7 +17,6 @@ class Detail extends Component {
       .then(res => this.setState({ post: res.data }))
       .then(res => console.log(this.state.post.img))
       .catch(err => this.props.history.push("/login"));
-      
   }
 
   yesno = value => {
@@ -47,7 +46,6 @@ class Detail extends Component {
       let fragment = <React.Fragment ><ul>{frag1}{frag2}{frag3}</ul></React.Fragment>
       return fragment
     }
-
   }
 
   render() {

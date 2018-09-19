@@ -49,27 +49,25 @@ class Upload extends Component {
     handleChange = (event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-
         const name = target.name;
-
         this.setState({
             [name]: value
         });
     }
 
+
+
     handleSubmit = (e) => {
         e.preventDefault();
-
         let listoFiles = this.uploadInput.files;
         let data = new FormData();
         for (let i = 0; i < listoFiles.length; i++) {
             data.append("file", listoFiles[i])
             data.append("fileName", listoFiles[i].name)
         }
-        console.log(data)
 
         API.savePost({
-            img: data,
+            img: data, 
             name: this.state.name,
             phone: this.state.phone,
             email: this.state.email,
@@ -97,17 +95,13 @@ class Upload extends Component {
             bigDog: this.state.bigDog,
             ammenties: this.state.ammenties,
             userID: localStorage.getItem('currentUserID')
-        })
-            .then(res => this.props.history.push("/"))
-            .catch(err => { window.alert("please fill out all fields"), console.log(err) });
+        }).catch(err => console.log(err))
     }
 
     fileselectHandler = event => {
         let files = event.target.files
         let reader = new FileReader();
         reader.readAsDataURL(files[0])
-
-
         reader.onload = e => {
             const formData = { file: e.target.result }
             console.log(formData);
@@ -122,7 +116,6 @@ class Upload extends Component {
         if (newArray != null) {
             newArray = newArray.slice()
         }
-        let current = this
 
         function readAndPreview(file) {
 
@@ -138,9 +131,6 @@ class Upload extends Component {
                     preview.appendChild(img);
                 }, false);
                 reader.readAsDataURL(file);
-
-
-
             }
         }
         if (files) {
@@ -172,7 +162,6 @@ class Upload extends Component {
                         <div className="col"></div>
                         <Col size="md-8">
                             <h2>Contact details</h2>
-
                             <Row>
                                 <Col size="md-6">
                                     <label>Name</label>

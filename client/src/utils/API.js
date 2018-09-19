@@ -27,6 +27,11 @@ export default {
     return axios.post("/api/posts", postData);
   },
 
+  saveImage: function(image, callback) {
+    console.log(image)
+    return axios.post('/api/posts',{image: image})
+  },
+
   resetPass: function(email){
     return axios.post("/api/users/forgot", email);
   }

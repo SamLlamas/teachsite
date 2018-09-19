@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const postsController = require("../../controllers/postsController");
 var passport = require('passport');
+
 require('../../config/passport')(passport);
 
 
@@ -29,15 +30,16 @@ router.get("/", passport.authenticate('jwt', { session: false }), function (req,
 });
 router.post("/", passport.authenticate('jwt', { session: false }), function (req, res) {
   var token = getToken(req.headers);
+  console.log(req.body)
   if (token) {
-    console.log("halo")
     postsController.create(req, res)
-    
   }
   else {
     res.redirect("/login");
   }
 });
+
+
 
 // Matches with "/api/books/:id"
 router.get("/:id", passport.authenticate('jwt', { session: false }), function (req, res) {

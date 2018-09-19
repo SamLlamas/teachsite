@@ -9,6 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
+const multer   = require('multer')
 require('dotenv').config();
 
 // Define middleware here
@@ -21,7 +22,7 @@ saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(fileUpload());
+
 
 
 
