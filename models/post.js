@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
-  img:[{data: Buffer, contentType: String}],
+  postnumber: { type: String, required: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
   phone:  { type: String, required: true },
@@ -29,7 +29,7 @@ const PostSchema = new Schema({
   smallDog: { type: Boolean, required: true },
   bigDog: { type: Boolean, required: true },
   ammenties: { type: String, required: true },
-  userID: { type: String, required: true }
+  userID: { type: String, required: true },
 });
 
 const Post = mongoose.model("Post", PostSchema);

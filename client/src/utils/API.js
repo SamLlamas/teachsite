@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export default {
   // Gets all Posts
   getPosts: function() {
@@ -18,6 +19,9 @@ export default {
   getPost: function(id) {
     return axios.get("/api/posts/" + id);
   },
+  getImgData: function(id) {
+    return axios.get("/api/images/data/" + id);
+  },
   // Deletes the Post with the given id
   deletePost: function({post, userdata}) {
     return axios.delete("/api/posts/" + post._id, {userdata});
@@ -27,10 +31,6 @@ export default {
     return axios.post("/api/posts", postData);
   },
 
-  saveImage: function(image, callback) {
-    console.log(image)
-    return axios.post('/api/posts',{image: image})
-  },
 
   resetPass: function(email){
     return axios.post("/api/users/forgot", email);

@@ -4,13 +4,13 @@ import API from "../../utils/API";
 import { Col, Row, Container } from "../../components/Grid";
 import { Input, TextArea, FormBtn, Checkbox } from "../../components/Form";
 import axios from 'axios';
+const crypto = require('crypto');
 
 
 class Upload extends Component {
     constructor() {
         super();
         this.state = {
-            img: [],
             name: "",
             phone: "",
             email: "",
@@ -36,8 +36,7 @@ class Upload extends Component {
             cat: false,
             smallDog: false,
             bigDog: false,
-            ammenties: "Please Select",
-            userID: ""
+            ammenties: "Please Select"
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,40 +61,21 @@ class Upload extends Component {
         let listoFiles = this.uploadInput.files;
         let data = new FormData();
         for (let i = 0; i < listoFiles.length; i++) {
-            data.append("file", listoFiles[i])
-            data.append("fileName", listoFiles[i].name)
+            data.append("file", listoFiles[i], listoFiles[i].name, this.state.address)
         }
 
-        API.savePost({
-            img: data, 
-            name: this.state.name,
-            phone: this.state.phone,
-            email: this.state.email,
-            address: this.state.address,
-            city: this.state.city,
-            type: this.state.type,
-            rent: this.state.rent,
-            duration: this.state.duration,
-            deposit: this.state.deposit,
-            date: this.state.date,
-            bedrooms: this.state.bedrooms,
-            terms: this.state.terms,
-            baths: this.state.baths,
-            sqft: this.state.sqft,
-            description: this.state.description,
-            ac: this.state.ac,
-            garage: this.state.garage,
-            offstreet: this.state.offstreet,
-            furnished: this.state.furnished,
-            pool: this.state.pool,
-            laundry: this.state.laundry,
-            noPet: this.state.noPet,
-            cat: this.state.cat,
-            smallDog: this.state.smallDog,
-            bigDog: this.state.bigDog,
-            ammenties: this.state.ammenties,
-            userID: localStorage.getItem('currentUserID')
-        }).catch(err => console.log(err))
+        data.append("postnumber", crypto.randomBytes(6).toString('hex'));
+        for (var key in this.state){
+            data.append(String(key), this.state[key])
+        }
+        data.append("userID", localStorage.getItem('currentUserID'));
+        
+
+        API
+        .savePost(data).catch(err => console.log(err))
+        // .then(res => this.props.history.push('/'))
+        .catch(err => console.log(err))
+
     }
 
     fileselectHandler = event => {
@@ -112,11 +92,6 @@ class Upload extends Component {
 
         var preview = document.querySelector('#preview');
         var files = document.querySelector('input[type=file]').files;
-        let newArray = this.state.img
-        if (newArray != null) {
-            newArray = newArray.slice()
-        }
-
         function readAndPreview(file) {
 
             // Make sure `file.name` matches our extensions criteria

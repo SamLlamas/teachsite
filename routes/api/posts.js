@@ -1,6 +1,30 @@
 const router = require("express").Router();
 const postsController = require("../../controllers/postsController");
 var passport = require('passport');
+const multer = require("multer");
+const GridFsStorage = require('multer-gridfs-storage');
+var Grid = require('gridfs-stream');
+var mongoose = require('mongoose');
+
+let gfs;
+var conn = mongoose.createConnection(process.env.MONGODB_URI || "mongodb://localhost:27017/teachSite", { useNewUrlParser: true });
+conn.once('open', function () {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("Photos")
+  // all set!
+})
+
+const storage = new GridFsStorage({
+  url: process.env.MONGODB_URI || "mongodb://localhost:27017/teachSite",
+  file: function(req, file) {
+    
+    return {
+        metadata: req.body,
+        bucketName: "Photos"
+    };
+}
+});
+const upload = multer({ storage: storage })
 
 require('../../config/passport')(passport);
 
@@ -28,9 +52,9 @@ router.get("/", passport.authenticate('jwt', { session: false }), function (req,
     res.redirect('/login');
   }
 });
-router.post("/", passport.authenticate('jwt', { session: false }), function (req, res) {
+
+router.post("/", upload.single("file"), passport.authenticate('jwt', { session: false }),  function (req, res) {
   var token = getToken(req.headers);
-  console.log(req.body)
   if (token) {
     postsController.create(req, res)
   }
@@ -41,11 +65,12 @@ router.post("/", passport.authenticate('jwt', { session: false }), function (req
 
 
 
-// Matches with "/api/books/:id"
+// Matches with "/api/posts/:id"
 router.get("/:id", passport.authenticate('jwt', { session: false }), function (req, res) {
   var token = getToken(req.headers);
   if (token) {
     postsController.findById(req, res)
+
   }
   else {
     res.redirect("/login");

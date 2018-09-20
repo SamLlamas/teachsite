@@ -1,6 +1,5 @@
 const db = require("../models");
-const multer = require("multer");
-var upload = multer( {dest:  __dirname + '/uploads'} )
+
 
 getToken = function (headers) {
   if (headers && headers.authorization) {
@@ -42,10 +41,8 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    
     db.Post
       .create(req.body)
-      .then(dbModel => console.log(dbModel))
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

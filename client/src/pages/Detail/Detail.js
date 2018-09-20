@@ -4,10 +4,14 @@ import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
 import axios from 'axios';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+
 
 class Detail extends Component {
   state = {
-    post: {}
+    post: {},
+    imgs: []
   };
   // When this component mounts, grab the book with the _id of this.props.match.params.id
   // e.g. localhost:3000/books/599dcb67f0f16317844583fc
@@ -15,8 +19,8 @@ class Detail extends Component {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
     API.getPost(this.props.match.params.id)
       .then(res => this.setState({ post: res.data }))
-      .then(res => console.log(this.state.post.img))
-      .catch(err => this.props.history.push("/login"));
+      .then(res => API.getImgData(this.state.post.postnumber).then(res => this.setState({ imgs: res.data })))
+      .catch(err => console.log(err));
   }
 
   yesno = value => {
@@ -48,7 +52,11 @@ class Detail extends Component {
     }
   }
 
+
+
   render() {
+
+    let files = this.state.imgs
 
     return (
       <Container fluid>
@@ -56,6 +64,18 @@ class Detail extends Component {
         <Row>
           <Col size="md-12">
             <Jumbotron>
+              
+                {files.length ? (
+                <Carousel>
+                  {files.map(file => (
+                    <div key={`${file.filename}`}>
+                      if (file.isImage){
+                        <img src={`/api/images/${file.filename}`} alt={`${file.filename}`} key={`${file._id}`}/>
+                      }
+                    </div>
+                  ))}
+                </Carousel>
+                ) : (<h3>No pictures to Display</h3>)}
             </Jumbotron>
           </Col>
         </Row>
@@ -96,9 +116,31 @@ class Detail extends Component {
                 <h3>Laundry: {this.state.post.laundry}</h3>
               </Col>
             </Row>
+            <br />
+            <Row>
+              <Col size="md-8">
+                <h3>Contact details:</h3>
+              </Col>
+            </Row>
+            <Row>
+              <Col size="md-6 md-offset-1">
+                <strong>Name:</strong>
+                <p> {this.state.post.name}</p>
+                <strong>Phone Number:</strong>
+                <p> {this.state.post.phone}</p>
+              </Col>
+              <Col size="md-6 md-offset-1">
+                <strong>E-mail:</strong>
+                <p> {this.state.post.email}</p>
+              </Col>
+            </Row>
+
+            <div className="col"></div>
           </Col>
           <div className="col"></div>
+
         </Row>
+
         <br /><br />
         <Row>
           <Col size="md-2">

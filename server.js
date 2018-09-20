@@ -7,10 +7,10 @@ const session = require('express-session');
 const passport = require('passport');
 const app = express();
 const PORT = process.env.PORT || 3001;
-const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const multer   = require('multer')
 require('dotenv').config();
+var Grid = require('gridfs-stream');
 
 // Define middleware here
 app.use(cors());
