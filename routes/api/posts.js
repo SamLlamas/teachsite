@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const postsController = require("../../controllers/postsController");
+const imgCommands = require("./images")
 var passport = require('passport');
 const multer = require("multer");
 const GridFsStorage = require('multer-gridfs-storage');
@@ -53,7 +54,7 @@ router.get("/", passport.authenticate('jwt', { session: false }), function (req,
   }
 });
 
-router.post("/", upload.single("file"), passport.authenticate('jwt', { session: false }),  function (req, res) {
+router.post("/", upload.array("file"), passport.authenticate('jwt', { session: false }),  function (req, res) {
   var token = getToken(req.headers);
   if (token) {
     postsController.create(req, res)
@@ -80,10 +81,12 @@ router.put("/:id", passport.authenticate('jwt', { session: false }), function (r
   var token = getToken(req.headers);
   if (token) { postsController.update(req, res) }
 })
+
 router.delete("/:id", passport.authenticate('jwt', { session: false }), function (req, res) {
+  
   var token = getToken(req.headers);
   if (token) { 
-    postsController.remove(req, res)
+    postsController.remove(req, res);
   }
 });
 

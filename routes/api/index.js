@@ -6,7 +6,7 @@ const imageRoutes = require("./images")
 // Book routes
 router.use("/users", userRoutes);
 router.use("/posts", postsRoutes);
-router.use("/images", imageRoutes);
+router.use("/images", imageRoutes.router);
 
 
 module.exports = router;

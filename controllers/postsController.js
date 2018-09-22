@@ -1,4 +1,5 @@
 const db = require("../models");
+const imgCommands = require("../routes/api/images")
 
 
 getToken = function (headers) {
@@ -56,6 +57,7 @@ module.exports = {
     db.Post
       .findById({ _id: req.params.id })
       .then(dbModel => belong(dbModel,req))
+      .then(dbModel => imgCommands.deleteImage(dbModel))
       .then(dbModel => {if(dbModel != undefined){dbModel.remove()}})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

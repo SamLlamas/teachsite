@@ -1,10 +1,7 @@
 const router = require("express").Router();
-const postsController = require("../../controllers/postsController");
-var passport = require('passport');
-const multer = require("multer");
-const GridFsStorage = require('multer-gridfs-storage');
 var Grid = require('gridfs-stream');
 var mongoose = require('mongoose');
+
 
 let gfs;
 var conn = mongoose.createConnection(process.env.MONGODB_URI || "mongodb://localhost:27017/teachSite", { useNewUrlParser: true });
@@ -13,6 +10,15 @@ conn.once('open', function () {
   gfs.collection("Photos")
   // all set!
 })
+
+deleteImage = (req, res) => {
+  gfs.remove({"metadata.postnumber": req.params.id}, function (err, gridStore) {
+    if (err) return handleError(err);
+    console.log('success');
+  });
+
+}
+
 
 
 router.get('/data/:id', (req, res) => {
@@ -31,7 +37,7 @@ router.get('/data/:id', (req, res) => {
             file.isImage = false;
           }
         });
-        console.log(files)
+
         res.json(files)
       }
     });
@@ -41,12 +47,11 @@ router.get('/data/:id', (req, res) => {
 
 
 router.get("/:id", (req, res) => {
-    console.log(req.params)
     /** First check if file exists */
     gfs.files.findOne({ filename: req.params.id }, (err, file) => {
         // Check if file
         if (!file || file.length === 0) {
-            console.log(file)
+
           return res.status(404).json({
             err: 'No file exists'
           });
@@ -63,4 +68,15 @@ router.get("/:id", (req, res) => {
       });
 });
 
-module.exports = router;
+
+
+module.exports = {
+  deleteImage : function(model){
+    console.log(model.postnumber)
+    gfs.files.remove({"metadata.postnumber": model.postnumber}, function (err, gridStore) {
+      if (err) return console.log(err);
+      console.log('success');
+    });
+    return model
+  },
+  router};

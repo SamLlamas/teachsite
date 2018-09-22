@@ -4,7 +4,7 @@ import p2 from "../../images/prospectsierrawith logo.png"
 class Nav extends Component {
   logout() {
     localStorage.removeItem('jwtToken');
-    window.location.reload();
+    this.props.history.push('/');
   }
   navLink;
 

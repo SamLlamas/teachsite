@@ -6,6 +6,7 @@ import API from "../../utils/API";
 import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
+import "./detail.css";
 
 
 class Detail extends Component {
@@ -62,22 +63,21 @@ class Detail extends Component {
       <Container fluid>
         <br />
         <Row>
-          <Col size="md-12">
+        <div className="col"></div>
+          <Col size="md-8">
             <Jumbotron>
-              
                 {files.length ? (
-                <Carousel>
+                <Carousel dynamicHeight showThumbs={false}>
                   {files.map(file => (
-                    <div key={`${file.filename}`}>
-                      if (file.isImage){
-                        <img src={`/api/images/${file.filename}`} alt={`${file.filename}`} key={`${file._id}`}/>
-                      }
+                    <div key={`${file.filename}`} >
+                        <img src={`/api/images/${file.filename}`} alt={`${file.filename}`} key={`${file._id}`} />
                     </div>
                   ))}
                 </Carousel>
                 ) : (<h3>No pictures to Display</h3>)}
-            </Jumbotron>
+           </Jumbotron>
           </Col>
+          <div className="col"></div>
         </Row>
         <Row>
           <div className="col"></div>

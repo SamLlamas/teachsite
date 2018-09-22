@@ -73,7 +73,7 @@ class Upload extends Component {
 
         API
         .savePost(data).catch(err => console.log(err))
-        // .then(res => this.props.history.push('/'))
+        .then(res => this.props.history.push('/'))
         .catch(err => console.log(err))
 
     }
@@ -92,8 +92,9 @@ class Upload extends Component {
 
         var preview = document.querySelector('#preview');
         var files = document.querySelector('input[type=file]').files;
+        preview.innerHTML = ""
         function readAndPreview(file) {
-
+            
             // Make sure `file.name` matches our extensions criteria
             if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
                 var reader = new FileReader();
@@ -109,6 +110,7 @@ class Upload extends Component {
             }
         }
         if (files) {
+            
             [].forEach.call(files, readAndPreview);
         }
 
