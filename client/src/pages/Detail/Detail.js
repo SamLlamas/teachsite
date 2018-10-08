@@ -110,7 +110,7 @@ class Detail extends Component {
             </Row>
             <Row>
               <Col size="md-6 md-offset-1">
-                <h3>Ammenties included: {this.state.post.ammenties}</h3>
+                <h3>Utilities included: {this.state.post.ammenties}</h3>
               </Col>
               <Col size="md-6 md-offset-1">
                 <h3>Laundry: {this.state.post.laundry}</h3>
