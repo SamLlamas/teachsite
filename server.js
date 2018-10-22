@@ -8,9 +8,14 @@ const passport = require('passport');
 const app = express();
 const PORT = process.env.PORT || 3001;
 const cors = require('cors');
-const multer   = require('multer')
+var flash = require('express-flash');
+
 require('dotenv').config();
-var Grid = require('gridfs-stream');
+
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+
 
 // Define middleware here
 app.use(cors());
@@ -21,6 +26,7 @@ app.use(session({ secret: 'session secret key',resave: false,
 saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 
 

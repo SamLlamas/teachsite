@@ -30,9 +30,10 @@ export default {
   savePost: function(postData) {
     return axios.post("/api/posts", postData);
   },
-
-
   resetPass: function(email){
     return axios.post("/api/users/forgot", email);
+  },
+  changePass: function({token , password}){
+    return axios.post("/api/users/forgot/" + token, password);
   }
 };

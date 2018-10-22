@@ -9,7 +9,6 @@ module.exports = {
     getUser: function (req, res) {
     },
     checkLogin: function (req, res) {
-        console.log(req)
         db.User.findOne({
             username: req.body.username
         }, function (err, user) {

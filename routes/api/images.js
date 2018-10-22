@@ -25,7 +25,7 @@ router.get('/data/:id', (req, res) => {
     gfs.files.find({"metadata.postnumber": req.params.id}).toArray((err, files) => {
       // Check if files
       if (!files || files.length === 0) {
-        res.render('index', { files: false });
+        res.json(files)
       } else {
         files.map(file => {
           if (
@@ -72,7 +72,6 @@ router.get("/:id", (req, res) => {
 
 module.exports = {
   deleteImage : function(model){
-    console.log(model.postnumber)
     gfs.files.remove({"metadata.postnumber": model.postnumber}, function (err, gridStore) {
       if (err) return console.log(err);
       console.log('success');

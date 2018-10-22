@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp"
 import Forgot from "./pages/forgot"
 import Upload from "./pages/Upload"
 import Nav from "./components/Nav";
+import Reset from "./pages/Reset";
 
 
 const App = () => (
@@ -19,6 +20,7 @@ const App = () => (
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/" component={Postings} />
         <Route exact path="/posts/:id" component={Detail} />
+        <Route exact path="/forgot/:id" component={Reset} />
         <Route exact path="/forgot" component={Forgot} />
         <Route exact path="/upload" component={Upload} />
         <Route component={NoMatch} />

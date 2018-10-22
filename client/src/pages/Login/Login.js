@@ -33,7 +33,6 @@ class Login extends Component {
                 .then(res => {
                     localStorage.setItem('jwtToken', res.data.token);
                     localStorage.setItem('currentUserID', res.data.id);
-                    console.log(localStorage);
                     this.props.history.push('/');
                 })
                 .catch(err => window.alert("Incorrect Password"));

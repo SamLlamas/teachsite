@@ -18,6 +18,7 @@ class Detail extends Component {
   // e.g. localhost:3000/books/599dcb67f0f16317844583fc
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+    console.log(this.props.match)
     API.getPost(this.props.match.params.id)
       .then(res => this.setState({ post: res.data }))
       .then(res => API.getImgData(this.state.post.postnumber).then(res => this.setState({ imgs: res.data })))
