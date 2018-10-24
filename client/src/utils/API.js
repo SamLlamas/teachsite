@@ -34,6 +34,7 @@ export default {
     return axios.post("/api/users/forgot", email);
   },
   changePass: function({token , password}){
-    return axios.post("/api/users/forgot/" + token, password);
+
+    return axios.post("/api/users/forgot/" + token, {password});
   }
 };
