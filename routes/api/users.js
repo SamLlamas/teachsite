@@ -67,7 +67,7 @@ router.post("/forgot", function (req, res, next) {
                 to: user.email,
                 from: 'resetPass@pantherden.com',
                 subject: 'Password Reset',
-                text: 'test'
+                text: 'http://' + req.headers.host + '/reset/' + token + '\n\n' 
             };
             sgMail.send(msg);
             return res.json(true);
