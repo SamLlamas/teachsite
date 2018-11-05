@@ -57,25 +57,27 @@ class Detail extends Component {
 
   render() {
 
+    let d = new Date(this.state.post.date)
+    d = d.toLocaleDateString("en-US")
     let files = this.state.imgs
 
     return (
       <Container fluid>
         <br />
         <Row>
-        <div className="col"></div>
+          <div className="col"></div>
           <Col size="md-8">
             <Jumbotron>
-                {files.length ? (
+              {files.length ? (
                 <Carousel dynamicHeight showThumbs={false}>
                   {files.map(file => (
                     <div key={`${file.filename}`} >
-                        <img src={`/api/images/${file.filename}`} alt={`${file.filename}`} key={`${file._id}`} />
+                      <img src={`/api/images/${file.filename}`} alt={`${file.filename}`} key={`${file._id}`} />
                     </div>
                   ))}
                 </Carousel>
-                ) : (<h3>No pictures to Display</h3>)}
-           </Jumbotron>
+              ) : (<h3>No pictures to Display</h3>)}
+            </Jumbotron>
           </Col>
           <div className="col"></div>
         </Row>
@@ -91,6 +93,25 @@ class Detail extends Component {
               <br />
               <p> {this.state.post.description}</p>
             </article>
+
+            <Row>
+              <Col size="md-12 md-offset-1">
+                <h3>Details:</h3>
+              </Col>
+            </Row>
+            <Row>
+              <Col size="md-6 md-offset-1">
+                <strong>Rent:</strong><p>${this.state.post.rent}/month</p>
+                <strong>Lease Duration:</strong> <p> {this.state.post.duration}</p>
+              </Col>
+              <Col size="md-6 md-offset-1">
+
+                <strong>Date Available:</strong>
+                <p> {d}</p>
+                <strong>Lease Terms:</strong>
+                <p> {this.state.post.terms}</p>
+              </Col>
+            </Row>
             <Row>
               <Col size="md-6 md-offset-1">
                 <h3>Amenities:</h3>
