@@ -65,7 +65,7 @@ module.exports = {
                     return null;
                 }
               }
-            console.log(2)
+           
             var token = getToken(req.headers);
             if (token) {
                 return true

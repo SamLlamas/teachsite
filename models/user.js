@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.comparePassword = function (passw, cb) {
-    console.log(passw, this.password)
+    
   bcrypt.compare(passw, this.password, function (err, isMatch) {
     
       if (err) {

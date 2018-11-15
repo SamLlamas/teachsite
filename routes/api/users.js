@@ -80,7 +80,7 @@ router.post("/forgot", function (req, res, next) {
 })
 
 router.get('/forgot/:id', function (req, res) {
-        console.log("test231")
+        
         const User = db.User
         User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
             if (!user) {
@@ -113,7 +113,7 @@ router.post('/forgot/:id', function (req, res) {
             });
         },
         function (user, done) {
-            console.log(6)
+            
             const msg = {
                 to: user.email,
                 from: 'resetPass@pantherden.com',
